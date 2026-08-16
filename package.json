@@ -22,7 +22,7 @@
     "type": "git",
     "url": "git+https://github.com/ZSLsherly/DSH-remote-console.git"
   },
-  "author": "Sherly",
+  "author": "dsh-mobile contributors",
   "type": "module",
   "main": "./lib/index.js",
   "types": "./lib/types/index.d.ts",

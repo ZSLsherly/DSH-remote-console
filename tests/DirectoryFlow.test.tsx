@@ -22,7 +22,7 @@ describe('DirectoryFlow', () => {
       />,
     )
 
-    fireEvent.change(screen.getByPlaceholderText('C:\\Users\\sherl\\my-project'), {
+    fireEvent.change(screen.getByPlaceholderText('C:\\my-project'), {
       target: { value: 'C:\\work\\demo' },
     })
     fireEvent.click(screen.getByRole('button', { name: '打开工作区' }))

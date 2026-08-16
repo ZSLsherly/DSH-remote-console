@@ -19,6 +19,8 @@ const css = String.raw`
     gap: 6px;
     min-height: 44px;
     padding: 4px 6px 4px 10px;
+    flex-wrap: wrap;
+    -webkit-tap-highlight-color: transparent;
     border: 1px solid var(--dsw-alias-border-l1);
     border-radius: 14px;
     background: var(--dsw-specific-tip);
@@ -70,6 +72,8 @@ const css = String.raw`
     align-items: center;
     gap: 4px;
     flex: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .dsh-mobile-button {
@@ -119,9 +123,11 @@ const css = String.raw`
   inset: 0;
   z-index: 9999;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
   background: rgba(0, 0, 0, .45);
 }
 
@@ -131,6 +137,9 @@ const css = String.raw`
   flex-direction: column;
   gap: 8px;
   width: min(480px, 100%);
+  max-height: 100%;
+  margin: auto;
+  overflow-y: auto;
   padding: 16px;
   border: 1px solid var(--dsw-alias-border-l1);
   border-radius: 16px;
@@ -148,15 +157,15 @@ const css = String.raw`
 .dsh-mobile-workspace-input {
   box-sizing: border-box;
   width: 100%;
-  min-height: 40px;
+  min-height: 44px;
   padding: 8px 10px;
   border: 1px solid var(--dsw-alias-border-l1);
   border-radius: 10px;
   background: var(--dsw-alias-interactive-bg);
   color: var(--dsw-alias-label-primary);
   font: inherit;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 22px;
 }
 
 .dsh-mobile-workspace-input:focus {

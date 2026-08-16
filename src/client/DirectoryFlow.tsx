@@ -67,7 +67,7 @@ export function DirectoryFlow({
           autoFocus
           inputMode="text"
           spellCheck={false}
-          placeholder="C:\Users\sherl\my-project"
+          placeholder="C:\my-project"
           value={path}
           onChange={event => { setPath(event.target.value) }}
           disabled={busy}

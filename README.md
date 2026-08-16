@@ -150,7 +150,7 @@ DSH 出于安全限制，`host.pickDirectory` 只允许本机回环调用；手�
 示例路径：
 
 ```text
-C:\Users\sherl\my-project
+C:\my-project
 ```
 
 ## 安全边界
