@@ -76,7 +76,8 @@
     "@deepseek-ai/dsh-client-runtime": "^0.1.0-rc.6",
     "@deepseek-ai/dsh-client-ui-conversation": "^0.1.0-rc.6",
     "@deepseek-ai/dsh-client-ui-slots": "^0.1.0-rc.6",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "@deepseek-ai/dsh-client-ui-workspace": "^0.1.0-rc.6"
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
@@ -92,7 +93,8 @@
     "react-dom": "^18.2.0",
     "tsdown": "^0.22.2",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.8",
+    "@deepseek-ai/dsh-client-ui-workspace": "^0.1.0-rc.6"
   },
   "publishConfig": {
     "access": "public"

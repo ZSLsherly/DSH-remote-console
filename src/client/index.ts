@@ -4,6 +4,7 @@ import type { IWorkspaces } from '@deepseek-ai/dsh-client-runtime/client'
 import type {} from '@deepseek-ai/dsh-client-ui-conversation/client'
 
 import { createInstallPromptController, createPageNotificationController } from './browser.js'
+import { DirectoryFlow } from './DirectoryFlow.js'
 import { MobileDock } from './MobileDock.js'
 import { installStyles } from './styles.js'
 
@@ -18,6 +19,25 @@ export function apply(ctx: ClientContext): void {
 
   ctx.effect(installStyles)
   ctx.effect(() => installPrompt.start())
+
+  const directoryInjected = () => ({
+    isRemote: !ctx.connection.isLoopback,
+    pickLocal: () => ctx.workspaces.pickDirectory(),
+    language,
+  })
+
+  ctx.slots.inject('conversation.hero.workspace.directoryFlow', () => ctx.slots.inject('sidebar.workspaces.directoryFlow', function* () {
+    yield ctx.slots.register({
+      name: 'conversation.hero.workspace.directoryFlow',
+      priority: -100,
+      inject: directoryInjected,
+    }, DirectoryFlow)
+    yield ctx.slots.register({
+      name: 'sidebar.workspaces.directoryFlow',
+      priority: -100,
+      inject: directoryInjected,
+    }, DirectoryFlow)
+  }))
   ctx.slots.inject('conversation.input.dock', () => ctx.slots.register({
     name: 'conversation.input.dock',
     id: 'dsh-mobile',

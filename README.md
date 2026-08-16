@@ -145,7 +145,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-remote.p
 
 DSH 出于安全限制，`host.pickDirectory` 只允许本机回环调用；手机通过 Tailscale 远程访问时调用它会返回 `HTTP 403`。
 
-本插件在手机端提供一个 **“打开工作区”** 按钮：点击后输入电脑上的本地工作区绝对路径，插件会通过 DSH 的 `workspace.create` 接口直接注册并打开该目录，绕开被限制的原生目录选择器。
+手机远程访问时，本插件会接管 DSH 原生的 **“选择工作区域 / 添加工作区”** 流程：点击后会弹出路径输入框，输入电脑上的本地工作区绝对路径，插件会通过 DSH 的 `workspace.create` 接口直接注册并打开该目录，绕开被限制的原生目录选择器。对话输入区的 **“打开工作区”** 按钮也走同样的路径。
 
 示例路径：
 
