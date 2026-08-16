@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsdown'
 
-const pluginId = 'dsh-mobile'
+const pluginId = '@wahu/dsh-mobile'
 
 export default defineConfig([
   {

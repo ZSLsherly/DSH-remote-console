@@ -31,7 +31,7 @@ foreach ($url in @($localUrl, $remoteUrl)) {
   Write-Host "OK $url"
 }
 
-$clientUrl = "https://${dnsName}:$HttpsPort/plugins/dsh-mobile/client.js"
+$clientUrl = "https://${dnsName}:$HttpsPort/plugins/@wahu/dsh-mobile/client.js"
 $client = Invoke-WebRequest -UseBasicParsing -Uri $clientUrl -TimeoutSec 10
 if ($client.StatusCode -ne 200 -or $client.Content -notmatch '__ModuleLoader__') {
   throw "The dsh-mobile browser bundle is not available at $clientUrl"
