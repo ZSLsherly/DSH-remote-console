@@ -12,6 +12,12 @@ export const inject = ['slots', 'sessions', 'connection', 'workspaces']
 
 type ClientContext = Context & { connection: ConnectionHandle; workspaces: IWorkspaces }
 
+function isRemoteBrowser(): boolean {
+  if (typeof window === 'undefined') return false
+  const host = window.location.hostname.toLowerCase()
+  return host !== '127.0.0.1' && host !== 'localhost' && host !== '::1' && host !== '[::1]'
+}
+
 export function apply(ctx: ClientContext): void {
   const notifications = createPageNotificationController()
   const installPrompt = createInstallPromptController()
@@ -21,7 +27,7 @@ export function apply(ctx: ClientContext): void {
   ctx.effect(() => installPrompt.start())
 
   const directoryInjected = () => ({
-    isRemote: !ctx.connection.isLoopback,
+    isRemote: isRemoteBrowser(),
     pickLocal: () => ctx.workspaces.pickDirectory(),
     language,
   })
@@ -44,7 +50,7 @@ export function apply(ctx: ClientContext): void {
     order: -100,
     inject: sessionId => ({
       connectionSource: ctx.connection.hostDescription,
-      isRemote: !ctx.connection.isLoopback,
+      isRemote: isRemoteBrowser(),
       notifications,
       installPrompt,
       language,
