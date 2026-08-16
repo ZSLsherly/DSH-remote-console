@@ -1,0 +1,6 @@
+# dsh-mobile is intentionally a thin Web-profile layer. The node half is an
+# inert Loader seat; package metadata exposes the browser half to the official
+# dsh client-module loader.
+- insert:
+    - id: dsh-mobile
+      name: dsh-mobile
