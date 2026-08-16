@@ -27,7 +27,7 @@ describe('client plugin registration', () => {
 
     apply(ctx as never)
 
-    expect(inject).toEqual(['slots', 'sessions', 'connection'])
+    expect(inject).toEqual(['slots', 'sessions', 'connection', 'workspaces'])
     expect(registration).toMatchObject({
       name: 'conversation.input.dock',
       id: 'dsh-mobile',

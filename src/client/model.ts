@@ -26,6 +26,10 @@ export interface MobileCopy {
   ready: string
   attention: (count: number) => string
   openAttention: string
+  openWorkspace: string
+  workspacePathPrompt: string
+  openingWorkspace: string
+  workspaceOpenFailed: string
   cancel: string
   cancelling: string
   enableNotifications: string
@@ -49,6 +53,10 @@ const zh: MobileCopy = {
   ready: '已就绪',
   attention: count => `待处理 ${count}`,
   openAttention: '打开下一个待处理会话',
+  openWorkspace: '打开工作区',
+  workspacePathPrompt: '请输入电脑上的本地工作区绝对路径，例如 C:\\Users\\sherl\\project',
+  openingWorkspace: '正在打开...',
+  workspaceOpenFailed: '打开工作区失败',
   cancel: '停止',
   cancelling: '停止中...',
   enableNotifications: '开启通知',
@@ -72,6 +80,10 @@ const en: MobileCopy = {
   ready: 'Ready',
   attention: count => `${count} pending`,
   openAttention: 'Open next session needing attention',
+  openWorkspace: 'Open workspace',
+  workspacePathPrompt: 'Enter the absolute local workspace path on the computer, e.g. C:\\Users\\sherl\\project',
+  openingWorkspace: 'Opening...',
+  workspaceOpenFailed: 'Could not open workspace',
   cancel: 'Stop',
   cancelling: 'Stopping...',
   enableNotifications: 'Enable alerts',

@@ -141,6 +141,18 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-remote.p
 "C:\Program Files\Tailscale\tailscale.exe" serve status
 ```
 
+## 远程打开本地工作区
+
+DSH 出于安全限制，`host.pickDirectory` 只允许本机回环调用；手机通过 Tailscale 远程访问时调用它会返回 `HTTP 403`。
+
+本插件在手机端提供一个 **“打开工作区”** 按钮：点击后输入电脑上的本地工作区绝对路径，插件会通过 DSH 的 `workspace.create` 接口直接注册并打开该目录，绕开被限制的原生目录选择器。
+
+示例路径：
+
+```text
+C:\Users\sherl\my-project
+```
+
 ## 安全边界
 
 - DSH 只监听 `127.0.0.1`，不使用 `0.0.0.0`。

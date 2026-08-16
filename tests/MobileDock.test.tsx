@@ -62,6 +62,7 @@ function props(value: SessionListState, onCancel = vi.fn(async () => ({ ok: true
     language: 'en-US',
     onCancel,
     onOpenSession: vi.fn(),
+    onOpenWorkspace: vi.fn(async () => {}),
   } as unknown as MobileDockProps
 }
 

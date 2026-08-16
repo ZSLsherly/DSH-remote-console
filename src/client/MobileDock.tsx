@@ -25,6 +25,7 @@ export interface MobileDockInjected {
   language: string | undefined
   onCancel(): Promise<CancelOutcome>
   onOpenSession(id: SessionId): void
+  onOpenWorkspace(path: string): Promise<void>
 }
 
 export type MobileDockProps = PropsRuntime<'conversation.input.dock'> & MobileDockInjected
@@ -39,6 +40,7 @@ export function MobileDock({
   language,
   onCancel,
   onOpenSession,
+  onOpenWorkspace,
 }: MobileDockProps): JSX.Element {
   const sessions = useSessions(state => state)
   const connected = useSyncExternalStore(
@@ -55,6 +57,8 @@ export function MobileDock({
   const [notificationPermission, setNotificationPermission] = useState(() => notifications.permission())
   const [cancelling, setCancelling] = useState(false)
   const [error, setError] = useState<string>()
+  const [openingWorkspace, setOpeningWorkspace] = useState(false)
+  const [workspaceError, setWorkspaceError] = useState<string>()
   const previousAttention = useRef(snapshotAttention(sessions))
 
   const current = sessions.byId[sessionId]
@@ -85,6 +89,20 @@ export function MobileDock({
 
   const requestNotifications = async (): Promise<void> => {
     setNotificationPermission(await notifications.request())
+  }
+
+  const openWorkspace = async (): Promise<void> => {
+    const path = window.prompt(copy.workspacePathPrompt)
+    if (path === null || path.trim() === '') return
+    setOpeningWorkspace(true)
+    setWorkspaceError(undefined)
+    try {
+      await onOpenWorkspace(path.trim())
+    } catch (cause) {
+      setWorkspaceError(cause instanceof Error && cause.message.length > 0 ? cause.message : copy.workspaceOpenFailed)
+    } finally {
+      setOpeningWorkspace(false)
+    }
   }
 
   const cancel = async (): Promise<void> => {
@@ -121,6 +139,18 @@ export function MobileDock({
         </div>
 
         <div className="dsh-mobile-actions">
+          {isRemote && (
+            <button
+              type="button"
+              className="dsh-mobile-button"
+              data-secondary="true"
+              disabled={openingWorkspace}
+              title={copy.openWorkspace}
+              onClick={() => { void openWorkspace() }}
+            >
+              {openingWorkspace ? copy.openingWorkspace : copy.openWorkspace}
+            </button>
+          )}
           {attention.length > 0 && nextId !== undefined && (
             <button
               type="button"
@@ -168,6 +198,7 @@ export function MobileDock({
         </div>
       </div>
       {error !== undefined && <p className="dsh-mobile-error" role="alert">{error}</p>}
+      {workspaceError !== undefined && <p className="dsh-mobile-error" role="alert">{workspaceError}</p>}
     </div>
   )
 }
