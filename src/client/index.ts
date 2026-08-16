@@ -10,6 +10,8 @@ import { installStyles } from './styles.js'
 
 export const inject = ['slots', 'sessions', 'connection', 'workspaces']
 
+const KEEPALIVE_PATH = '/plugins/@wahu/dsh-mobile/keepalive'
+
 type ClientContext = Context & { connection: ConnectionHandle; workspaces: IWorkspaces }
 
 function isRemoteBrowser(): boolean {
@@ -25,6 +27,13 @@ export function apply(ctx: ClientContext): void {
 
   ctx.effect(installStyles)
   ctx.effect(() => installPrompt.start())
+  ctx.effect(() => {
+    if (!isRemoteBrowser()) return () => {}
+    const ping = (): void => { void fetch(KEEPALIVE_PATH, { method: 'POST', cache: 'no-store' }).catch(() => {}) }
+    ping()
+    const timer = setInterval(ping, 20_000)
+    return () => { clearInterval(timer) }
+  })
 
   const directoryInjected = () => ({
     isRemote: isRemoteBrowser(),

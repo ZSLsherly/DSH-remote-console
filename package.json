@@ -98,5 +98,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "koffi": "^3.1.4"
   }
 }
