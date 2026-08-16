@@ -106,7 +106,7 @@ const css = String.raw`
 }
 
 @media (max-width: 430px) {
-  .dsh-mobile-button[data-secondary='true'] { display: none; }
+  .dsh-mobile-button[data-secondary='true']:not(.dsh-mobile-workspace) { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

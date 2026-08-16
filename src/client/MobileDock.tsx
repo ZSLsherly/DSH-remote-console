@@ -142,7 +142,7 @@ export function MobileDock({
           {isRemote && (
             <button
               type="button"
-              className="dsh-mobile-button"
+              className="dsh-mobile-button dsh-mobile-workspace"
               data-secondary="true"
               disabled={openingWorkspace}
               title={copy.openWorkspace}
