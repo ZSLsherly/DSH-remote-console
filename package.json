@@ -4,8 +4,13 @@
   "description": "Secure mobile companion bundle for the DeepSeek Harness Web profile",
   "keywords": [
     "deepseek",
+    "deepseek-harness",
     "dsh",
+    "dsh-plugin",
+    "plugin",
+    "bundle",
     "mobile",
+    "mobile-console",
     "remote-console",
     "tailscale"
   ],
@@ -57,7 +62,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "check": "corepack pnpm run typecheck && corepack pnpm run test && corepack pnpm run build",
-    "prepack": "corepack pnpm run check"
+    "prepack": "corepack pnpm run check",
+    "prepare": "corepack pnpm run build"
   },
   "engines": {
     "node": "^22.19.0 || >=24.0.0"
@@ -87,5 +93,8 @@
     "tsdown": "^0.22.2",
     "typescript": "^6.0.3",
     "vitest": "^4.1.8"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

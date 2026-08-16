@@ -38,6 +38,24 @@ DSH 官方 Session / RPC / Permission / Reconnect
 - Corepack
 - [Tailscale](https://tailscale.com/download)（远程访问需要）
 
+## 官方安装方式
+
+DSH 官方插件分发路径是 `dsh plugin --profile <name> add`，支持 npm 包、tarball 和 GitHub 安装。
+
+```sh
+# 从 npm（发布后）
+dsh plugin --profile web add dsh-mobile
+
+# 从本地 tarball
+corepack pnpm pack
+dsh plugin --profile web add ./dsh-mobile-0.1.0.tgz
+
+# 从 GitHub（已提供 prepare 构建）
+dsh plugin --profile web add github:ZSLsherly/DSH-remote-console
+```
+
+> 包名 `dsh-mobile`，插件 ID 同为 `dsh-mobile`；包内已声明 `dsh.bundle` 与 `dsh.client` manifest。
+
 ## 安装
 
 在 CMD 中执行：
@@ -149,3 +167,10 @@ corepack.cmd pnpm run check
 ## License
 
 [MIT](./LICENSE)
+
+## 生态标签
+
+该仓库/包使用以下标签便于 DSH 插件市场与社区索引发现：
+
+- GitHub topics：`dsh-plugin`、`deepseek-harness`、`dsh`、`mobile`、`remote-console`、`tailscale`
+- npm keywords：`dsh-plugin`、`deepseek-harness`、`dsh`、`mobile`、`remote-console`、`tailscale`
