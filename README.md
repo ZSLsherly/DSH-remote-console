@@ -49,6 +49,9 @@ dsh plugin --profile web add @wahu/dsh-mobile
 corepack pnpm pack
 dsh plugin --profile web add ./wahu-dsh-mobile-0.2.0.tgz
 
+# 从 GitHub Release tarball
+dsh plugin --profile web add https://github.com/ZSLsherly/DSH-remote-console/releases/download/v0.2.0/wahu-dsh-mobile-0.2.0.tgz
+
 # 从 GitHub（已提供 prepare 构建）
 dsh plugin --profile web add github:ZSLsherly/DSH-remote-console
 ```
