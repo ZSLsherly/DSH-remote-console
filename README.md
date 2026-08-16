@@ -44,17 +44,17 @@ DSH 官方插件分发路径是 `dsh plugin --profile <name> add`，支持 npm �
 
 ```sh
 # 从 npm（发布后）
-dsh plugin --profile web add dsh-mobile
+dsh plugin --profile web add @wahu/dsh-mobile
 
 # 从本地 tarball
 corepack pnpm pack
-dsh plugin --profile web add ./dsh-mobile-0.1.0.tgz
+dsh plugin --profile web add ./wahu-dsh-mobile-0.1.0.tgz
 
 # 从 GitHub（已提供 prepare 构建）
 dsh plugin --profile web add github:ZSLsherly/DSH-remote-console
 ```
 
-> 包名 `dsh-mobile`，插件 ID 同为 `dsh-mobile`；包内已声明 `dsh.bundle` 与 `dsh.client` manifest。
+> 包名 `@wahu/dsh-mobile`，插件 ID 同为 `dsh-mobile`；包内已声明 `dsh.bundle` 与 `dsh.client` manifest。
 
 ## 安装
 

@@ -3,4 +3,4 @@
 # dsh client-module loader.
 - insert:
     - id: dsh-mobile
-      name: dsh-mobile
+      name: '@wahu/dsh-mobile'

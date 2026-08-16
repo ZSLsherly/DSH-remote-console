@@ -1,5 +1,5 @@
 {
-  "name": "dsh-mobile",
+  "name": "@wahu/dsh-mobile",
   "version": "0.1.0",
   "description": "Secure mobile companion bundle for the DeepSeek Harness Web profile",
   "keywords": [
