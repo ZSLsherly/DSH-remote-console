@@ -119,6 +119,36 @@ const css = String.raw`
     font-size: 12px;
     line-height: 18px;
   }
+
+  /* DSH composer controls: stack the tools row and trailing row on phones so
+     the permission selector and model selector never overlap. */
+  .uV2eYG_row {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+
+  .uV2eYG_tools {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .uV2eYG_trailing {
+    flex: 1 1 100%;
+    min-width: 0;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  .uV2eYG_modes {
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+
+  .Sh0Q9G_trigger,
+  ._7KE1Ra_trigger {
+    max-width: min(180px, 42vw);
+  }
 }
 
 @media (max-width: 430px) {
