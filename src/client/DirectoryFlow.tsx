@@ -81,7 +81,7 @@ export function DirectoryFlow({
             onClick={dismiss}
             disabled={busy}
           >
-            {copy.cancel}
+            {copy.dialogCancel}
           </button>
           <button
             type="submit"

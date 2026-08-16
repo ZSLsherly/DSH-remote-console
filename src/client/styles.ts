@@ -10,19 +10,20 @@ const css = String.raw`
     width: calc(100% - 2 * var(--dsh-composer-side-clearance));
     max-width: var(--dsh-composer-card-max-width);
     margin: 0 auto;
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   .dsh-mobile-bar {
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     min-height: 44px;
-    padding: 4px 6px 4px 10px;
+    padding: 6px 8px;
     flex-wrap: wrap;
     -webkit-tap-highlight-color: transparent;
     border: 1px solid var(--dsw-alias-border-l1);
-    border-radius: 14px;
+    border-radius: 12px;
     background: var(--dsw-specific-tip);
     box-shadow: var(--dsw-shadow-lv1);
   }
@@ -70,7 +71,7 @@ const css = String.raw`
   .dsh-mobile-actions {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     flex: none;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -78,8 +79,8 @@ const css = String.raw`
 
   .dsh-mobile-button {
     min-width: 40px;
-    min-height: 36px;
-    padding: 0 10px;
+    min-height: 40px;
+    padding: 0 12px;
     border: none;
     border-radius: 10px;
     background: var(--dsw-alias-interactive-bg-hover);
@@ -88,7 +89,13 @@ const css = String.raw`
     font-weight: 500;
     line-height: 18px;
     cursor: pointer;
+    user-select: none;
     touch-action: manipulation;
+    transition: filter .12s ease, transform .12s ease, opacity .12s ease;
+  }
+
+  .dsh-mobile-button:active {
+    transform: scale(.97);
   }
 
   .dsh-mobile-button:disabled {
@@ -96,9 +103,14 @@ const css = String.raw`
     cursor: default;
   }
 
-  .dsh-mobile-button[data-danger='true'] {
-    background: var(--dsw-alias-interactive-bg-hover-danger);
-    color: var(--dsw-alias-state-error-primary);
+  .dsh-mobile-button[data-primary='true'] {
+    background: var(--dsw-alias-interactive-bg-primary, var(--dsw-alias-state-info-primary));
+    color: var(--dsw-alias-label-on-primary, #fff);
+  }
+
+  .dsh-mobile-button[data-attention='true'] {
+    background: var(--dsw-alias-state-warn-primary);
+    color: var(--dsw-alias-label-on-warn, #fff);
   }
 
   .dsh-mobile-error {
@@ -129,6 +141,7 @@ const css = String.raw`
   overscroll-behavior: contain;
   padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
   background: rgba(0, 0, 0, .45);
+  backdrop-filter: blur(4px);
 }
 
 .dsh-mobile-workspace-form {
@@ -183,6 +196,17 @@ const css = String.raw`
   display: flex;
   justify-content: flex-end;
   gap: 8px;
+}
+
+@media (max-width: 430px) {
+  .dsh-mobile-workspace-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .dsh-mobile-workspace-actions .dsh-mobile-button {
+    width: 100%;
+  }
 }
 
 @keyframes dsh-mobile-pulse {

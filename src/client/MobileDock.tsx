@@ -12,18 +12,12 @@ import {
   snapshotAttention,
 } from './model.js'
 
-export interface CancelOutcome {
-  ok: boolean
-  message?: string
-}
-
 export interface MobileDockInjected {
   connectionSource: HostDescriptionSource
   isRemote: boolean
   notifications: PageNotificationController
   installPrompt: InstallPromptController
   language: string | undefined
-  onCancel(): Promise<CancelOutcome>
   onOpenSession(id: SessionId): void
   onOpenWorkspace(path: string): Promise<void>
 }
@@ -38,7 +32,6 @@ export function MobileDock({
   notifications,
   installPrompt,
   language,
-  onCancel,
   onOpenSession,
   onOpenWorkspace,
 }: MobileDockProps): JSX.Element {
@@ -55,8 +48,6 @@ export function MobileDock({
   )
   const copy = useMemo(() => copyFor(language), [language])
   const [notificationPermission, setNotificationPermission] = useState(() => notifications.permission())
-  const [cancelling, setCancelling] = useState(false)
-  const [error, setError] = useState<string>()
   const [openingWorkspace, setOpeningWorkspace] = useState(false)
   const [workspaceError, setWorkspaceError] = useState<string>()
   const previousAttention = useRef(snapshotAttention(sessions))
@@ -92,29 +83,16 @@ export function MobileDock({
   }
 
   const openWorkspace = async (): Promise<void> => {
-    const path = window.prompt(copy.workspacePathPrompt)
-    if (path === null || path.trim() === '') return
     setOpeningWorkspace(true)
     setWorkspaceError(undefined)
     try {
+      const path = window.prompt(copy.workspacePathPrompt)
+      if (path === null || path.trim() === '') return
       await onOpenWorkspace(path.trim())
     } catch (cause) {
       setWorkspaceError(cause instanceof Error && cause.message.length > 0 ? cause.message : copy.workspaceOpenFailed)
     } finally {
       setOpeningWorkspace(false)
-    }
-  }
-
-  const cancel = async (): Promise<void> => {
-    setCancelling(true)
-    setError(undefined)
-    try {
-      const result = await onCancel()
-      if (!result.ok) setError(result.message ?? copy.cancelFailed)
-    } catch (cause) {
-      setError(cause instanceof Error && cause.message.length > 0 ? cause.message : copy.cancelFailed)
-    } finally {
-      setCancelling(false)
     }
   }
 
@@ -131,10 +109,7 @@ export function MobileDock({
           <span className="dsh-mobile-dot" data-state={state} aria-hidden="true" />
           <span className="dsh-mobile-copy">
             <strong>{stateLabel}</strong>
-            {' · '}
-            {connected ? copy.connected : copy.connecting}
-            {' · '}
-            {isRemote ? copy.remote : copy.local}
+            {isRemote ? ` · ${copy.remote}` : ` · ${copy.local}`}
           </span>
         </div>
 
@@ -143,8 +118,9 @@ export function MobileDock({
             <button
               type="button"
               className="dsh-mobile-button dsh-mobile-workspace"
-              data-secondary="true"
+              data-primary="true"
               disabled={openingWorkspace}
+              aria-label={copy.openWorkspace}
               title={copy.openWorkspace}
               onClick={() => { void openWorkspace() }}
             >
@@ -155,22 +131,12 @@ export function MobileDock({
             <button
               type="button"
               className="dsh-mobile-button"
+              data-attention="true"
               title={copy.openAttention}
               aria-label={copy.openAttention}
               onClick={() => { onOpenSession(nextId) }}
             >
               {copy.attention(attention.length)}
-            </button>
-          )}
-          {current?.running === true && (
-            <button
-              type="button"
-              className="dsh-mobile-button"
-              data-danger="true"
-              disabled={cancelling}
-              onClick={() => { void cancel() }}
-            >
-              {cancelling ? copy.cancelling : copy.cancel}
             </button>
           )}
           {notificationPermission !== 'unsupported' && notificationPermission !== 'granted' && (
@@ -180,6 +146,7 @@ export function MobileDock({
               data-secondary="true"
               disabled={notificationPermission === 'denied'}
               title={notificationLabel}
+              aria-label={notificationLabel}
               onClick={() => { void requestNotifications() }}
             >
               {notificationLabel}
@@ -190,6 +157,8 @@ export function MobileDock({
               type="button"
               className="dsh-mobile-button"
               data-secondary="true"
+              title={copy.install}
+              aria-label={copy.install}
               onClick={() => { void installPrompt.prompt() }}
             >
               {copy.install}
@@ -197,7 +166,6 @@ export function MobileDock({
           )}
         </div>
       </div>
-      {error !== undefined && <p className="dsh-mobile-error" role="alert">{error}</p>}
       {workspaceError !== undefined && <p className="dsh-mobile-error" role="alert">{workspaceError}</p>}
     </div>
   )

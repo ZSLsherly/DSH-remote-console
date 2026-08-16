@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { HostDescriptionSource } from '@deepseek-ai/dsh-client-connection/client'
 import type { SessionId, SessionListState, SessionSummary } from '@deepseek-ai/dsh-client-runtime/client'
@@ -34,7 +34,7 @@ function sessions(summary: Partial<SessionSummary> = {}): SessionListState {
   }
 }
 
-function props(value: SessionListState, onCancel = vi.fn(async () => ({ ok: true }))): MobileDockProps {
+function props(value: SessionListState): MobileDockProps {
   const useSessions = <S,>(selector: (state: SessionListState) => S): S => selector(value)
   const connectionSource: HostDescriptionSource = {
     getSnapshot: () => ({}) as never,
@@ -60,27 +60,23 @@ function props(value: SessionListState, onCancel = vi.fn(async () => ({ ok: true
     notifications,
     installPrompt,
     language: 'en-US',
-    onCancel,
     onOpenSession: vi.fn(),
     onOpenWorkspace: vi.fn(async () => {}),
   } as unknown as MobileDockProps
 }
 
 describe('MobileDock', () => {
-  it('shows remote running state and cancels through its injected action', async () => {
-    const onCancel = vi.fn(async () => ({ ok: true }))
-    render(<MobileDock {...props(sessions(), onCancel)} />)
+  it('shows connection state without a dedicated stop button', () => {
+    render(<MobileDock {...props(sessions())} />)
 
     expect(screen.getByRole('status').textContent).toContain('Running')
     expect(screen.getByRole('status').textContent).toContain('Remote')
-    fireEvent.click(screen.getByRole('button', { name: 'Stop' }))
-    await waitFor(() => { expect(onCancel).toHaveBeenCalledOnce() })
+    expect(screen.queryByRole('button', { name: 'Stop' })).toBeNull()
   })
 
-  it('surfaces cancellation errors', async () => {
-    render(<MobileDock {...props(sessions(), vi.fn(async () => ({ ok: false, message: 'Host refused' })))} />)
+  it('keeps the remote workspace opener visible', () => {
+    render(<MobileDock {...props(sessions())} />)
 
-    fireEvent.click(screen.getByRole('button', { name: 'Stop' }))
-    expect((await screen.findByRole('alert')).textContent).toContain('Host refused')
+    expect(screen.getByRole('button', { name: 'Open workspace' })).toBeTruthy()
   })
 })

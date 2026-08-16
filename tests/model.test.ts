@@ -61,7 +61,7 @@ describe('mobile session model', () => {
   })
 
   it('uses Chinese copy for Chinese browser locales', () => {
-    expect(copyFor('zh-CN').cancel).toBe('停止')
-    expect(copyFor('en-US').cancel).toBe('Stop')
+    expect(copyFor('zh-CN').dialogCancel).toBe('取消')
+    expect(copyFor('en-US').dialogCancel).toBe('Cancel')
   })
 })

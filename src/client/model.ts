@@ -30,13 +30,11 @@ export interface MobileCopy {
   workspacePathPrompt: string
   openingWorkspace: string
   workspaceOpenFailed: string
-  cancel: string
-  cancelling: string
+  dialogCancel: string
   enableNotifications: string
   notificationsEnabled: string
   notificationsDenied: string
   install: string
-  cancelFailed: string
   pendingNotificationTitle: string
   pendingNotificationBody: (title: string) => string
   completedNotificationTitle: string
@@ -57,13 +55,11 @@ const zh: MobileCopy = {
   workspacePathPrompt: '请输入电脑上的本地工作区绝对路径，例如 C:\\my-project',
   openingWorkspace: '正在打开...',
   workspaceOpenFailed: '打开工作区失败',
-  cancel: '停止',
-  cancelling: '停止中...',
+  dialogCancel: '取消',
   enableNotifications: '开启通知',
   notificationsEnabled: '通知已开启',
   notificationsDenied: '通知已禁用',
   install: '安装应用',
-  cancelFailed: '停止任务失败',
   pendingNotificationTitle: 'DSH 需要操作',
   pendingNotificationBody: title => `${title} 正在等待你的操作`,
   completedNotificationTitle: 'DSH 任务完成',
@@ -84,13 +80,11 @@ const en: MobileCopy = {
   workspacePathPrompt: 'Enter the absolute local workspace path on the computer, e.g. C:\\my-project',
   openingWorkspace: 'Opening...',
   workspaceOpenFailed: 'Could not open workspace',
-  cancel: 'Stop',
-  cancelling: 'Stopping...',
+  dialogCancel: 'Cancel',
   enableNotifications: 'Enable alerts',
   notificationsEnabled: 'Alerts enabled',
   notificationsDenied: 'Alerts blocked',
   install: 'Install app',
-  cancelFailed: 'Could not stop the task',
   pendingNotificationTitle: 'DSH needs your input',
   pendingNotificationBody: title => `${title} is waiting for you`,
   completedNotificationTitle: 'DSH task finished',

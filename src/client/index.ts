@@ -48,7 +48,7 @@ export function apply(ctx: ClientContext): void {
     name: 'conversation.input.dock',
     id: 'dsh-mobile',
     order: -100,
-    inject: sessionId => ({
+    inject: _sessionId => ({
       connectionSource: ctx.connection.hostDescription,
       isRemote: isRemoteBrowser(),
       notifications,
@@ -58,12 +58,6 @@ export function apply(ctx: ClientContext): void {
       onOpenWorkspace: async (path: string) => {
         const workspace = await ctx.workspaces.create({ path })
         ctx.workspaces.startSession(workspace.workspaceId)
-      },
-      onCancel: async () => {
-        const binding = ctx.sessions.binding(sessionId)
-        if (binding === undefined) return { ok: false, message: 'Session is no longer available' }
-        const result = await binding.session.cancel()
-        return result.ok ? { ok: true } : { ok: false, message: result.error.message }
       },
     }),
   }, MobileDock))

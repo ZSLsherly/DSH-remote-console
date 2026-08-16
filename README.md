@@ -6,7 +6,6 @@ DSH Remote Console 是 [DeepSeek Harness (DSH)](https://github.com/deepseek-ai/d
 
 - 显示 DSH 连接、运行、等待操作和就绪状态。
 - 统计待处理/已完成会话，并跳转到下一个会话。
-- 通过 DSH 官方 Session RPC 停止当前任务。
 - 在浏览器页面存活时提供待操作/任务完成通知。
 - 支持浏览器的“安装应用”提示。
 - 仅在手机/触摸屏布局中显示，不替换 DSH 原有界面。
